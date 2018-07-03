@@ -10,6 +10,10 @@ def new
   @restaurant = Restaurant.new
 end
 
+def show
+    @restaurant = Restaurant.find(params[:id])
+end
+
 def create
   @restaurant = Restaurant.new(restaurant_params)
   if @restaurant.save
@@ -19,6 +23,9 @@ def create
     flash[:alert] = "restaurant was failed to create"
     render :new
   end
+
+ 
+
 end
 
 private
