@@ -10,8 +10,9 @@ def new
   @restaurant = Restaurant.new
 end
 
-def show
-    @restaurant = Restaurant.find(params[:id])
+
+before_action :set_restaurant, only: [:show, :edit, :update]
+def show  
 end
 
 def create
@@ -23,15 +24,30 @@ def create
     flash[:alert] = "restaurant was failed to create"
     render :new
   end
-
- 
-
 end
+
+def update
+  if @restaurant.update(restaurant_params)
+    flash[:notice] = "restaurant was successfully updated"
+    redirect_to admin_restaurant_path(@restaurant)
+  else
+    flash[:alert] = "restaurant was failed to update"
+    render :edit
+  end
+end
+
 
 private
 
   def restaurant_params
     params.require(:restaurant).permit(:name, :opening_hours, :tel, :address, :description)
   end
+
+  def set_restaurant
+    @restaurant = Restaurant.find(params[:id])
+  end
+
+
+
 end
 
